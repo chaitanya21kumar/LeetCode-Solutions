@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int offset=1e4;
+    int offset=3*1e4; // 20*1000=20000=2*10^4
     int f(int i,int ans,int t,int n,vector<int> &nums,vector<vector<int>> &dp){
         if(i==n && ans==t) return 1;
         if(i>=n && ans!=t) return 0;
