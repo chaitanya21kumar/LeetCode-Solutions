@@ -9,7 +9,7 @@ public:
         if(i>=n) return;
         if(nums[i]<=t){
             temp.push_back(nums[i]);
-            f(i+1,n,t-nums[i],nums,temp);
+            // f(i+1,n,t-nums[i],nums,temp);
             f(i,n,t-nums[i],nums,temp);
             temp.pop_back();
             f(i+1,n,t,nums,temp);
