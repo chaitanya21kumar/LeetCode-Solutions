@@ -1,13 +1,12 @@
 class Solution {
 public:
-    vector<vector<int>> ans;
     set<int> s;
+    vector<vector<int>> ans;
     void f(int i,int n,vector<int>& nums,vector<int> &v){
         if(v.size()==n){
             ans.push_back(v);
             return;
         }
-
         for(int j=0;j<n;j++){
             if(s.find(nums[j])==s.end()){
                 v.push_back(nums[j]);
@@ -17,16 +16,12 @@ public:
                 v.pop_back();
             }
         }
-
-        
-
     }
     vector<vector<int>> permute(vector<int>& nums) {
-        vector<int> v;
+
         int n=nums.size();
-
+        vector<int> v;
         f(0,n,nums,v);
-
         return ans;
 
         
