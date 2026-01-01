@@ -9,16 +9,12 @@ public:
 
         if(o<n){
             s.push_back('(');
-            o++;
-            f(s,n,o,c);
-            o--;
+            f(s,n,o+1,c);
             s.pop_back();
         }
         if(c<o){
             s.push_back(')');
-            c++;
-            f(s,n,o,c);
-            c--;
+            f(s,n,o,c+1);
             s.pop_back();
         }
 
