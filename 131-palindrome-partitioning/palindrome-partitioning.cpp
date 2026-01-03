@@ -16,7 +16,6 @@ public:
             ans.push_back(temp);
             return;
         }
-
         for(int j=i;j<n;j++){
             if(ispal(i,j,s)){
                 temp.push_back(s.substr(i,j-i+1));
@@ -26,10 +25,12 @@ public:
         }
     }
     vector<vector<string>> partition(string s) {
-        vector<string> temp;
+
         int n=s.size();
+        vector<string> temp;
         f(0,n,s,temp);
         return ans;
+
 
         
     }
