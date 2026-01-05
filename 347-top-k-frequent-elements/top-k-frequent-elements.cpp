@@ -13,16 +13,14 @@ public:
         for(auto x:m){
             int val=x.first,freq=x.second;
             pq.push({freq,val});
+            if(pq.size()>k) pq.pop();
         }
 
         vector<int> ans;
-
-        while(pq.size()>k) pq.pop();
         while(!pq.empty()){
             ans.push_back(pq.top().second);
             pq.pop();
         }
-
         return ans;
         
        
