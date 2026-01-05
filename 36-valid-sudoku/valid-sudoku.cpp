@@ -2,15 +2,17 @@ class Solution {
 public:
     bool isValidSudoku(vector<vector<char>>& board) {
 
-        int r[10][10],c[10][10],b[10][10];
+        unordered_set<string> s;
 
         for(int i=0;i<9;i++){
             for(int j=0;j<9;j++){
                 if(board[i][j]=='.') continue;
-                int num=board[i][j]-'0';
-                int box=(i/3)*3+(j/3);
-                if(r[i][num] || c[j][num] || b[box][num]) return false;
-                r[i][num]=1;c[j][num]=1;b[box][num]=1;
+                int val=board[i][j];
+                string r=to_string(val)+" appears at row "+to_string(i);
+                string c=to_string(val)+" appears at col "+to_string(j);
+                string b=to_string(val)+" appears at row "+to_string(i/3)+"and col "+to_string(j/3);
+                if(s.find(r)!=s.end() || s.find(c)!=s.end() || s.find(b)!=s.end()) return false;
+                s.insert(r);s.insert(c);s.insert(b);
             }
         }
         return true;
