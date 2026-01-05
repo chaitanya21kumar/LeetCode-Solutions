@@ -1,31 +1,18 @@
 class Solution {
 public:
-    int ispal(string &str){
-        int n=str.size();
-        int i=0,j=n-1;
-        while(i<=j){
-            if(str[i]!=str[j]) return false;
-            i++;j--;
-        }
-        return true;
-    }
     bool isPalindrome(string s) {
-        int n=s.size();
-        set<char> st;
-        for(char ch='a';ch<='z';ch++) st.insert(ch);
-        for(char i='0';i<='9';i++) st.insert(i);
 
-        string ans="";
-
-        for(int i=0;i<n;i++){
-            char ch=tolower(s[i]);
-            if(st.find(ch)!=st.end()){
-                ans+=ch;
+        int l=0,r=s.size()-1;
+        
+        while(l<=r){
+            if(!isalnum(s[l])) l++;
+            else if(!isalnum(s[r])) r--;
+            else{
+                if(tolower(s[l])!=tolower(s[r])) return false;
+                l++;r--;
             }
         }
-        if(ispal(ans)) return true;
-        return false;
-        
+        return true;
         
     }
 };
