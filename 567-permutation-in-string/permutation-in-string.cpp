@@ -3,21 +3,26 @@ public:
     bool checkInclusion(string s1, string s2) {
 
         int n1=s1.size(),n2=s2.size();
-        unordered_map<char,int> m;
-        for(int i=0;i<n1;i++) m[s1[i]]++;
 
-        for(int i=0;i<=n2-n1;i++){
-            unordered_map<char,int> m2;
-            for(int j=i;j<=i+n1-1;j++){
-                m2[s2[j]]++;
+        vector<int> f1(26,0),f2(26,0);
+
+        for(int i=0;i<n1;i++){
+            f1[s1[i]-'a']++;
+        }
+
+        int l=0,r=0;
+
+        while(r<n2){
+            f2[s2[r]-'a']++;
+            if(r-l+1>n1){
+                f2[s2[l]-'a']--;
+                l++;
             }
-            if(m==m2) return true;
+            r++;
+
+            if(f1==f2) return true;
         }
         return false;
-
-
-
-
         
     }
 };
