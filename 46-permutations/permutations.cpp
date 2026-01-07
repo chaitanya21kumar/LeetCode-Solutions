@@ -1,27 +1,34 @@
 class Solution {
 public:
-    set<int> s;
     vector<vector<int>> ans;
-    void f(int i,int n,vector<int>& nums,vector<int> &v){
-        if(v.size()==n){
-            ans.push_back(v);
+    void f(int i,int n,vector<int>& nums,vector<int>& temp,set<int> &s){
+
+        if(temp.size()==n){
+            ans.push_back(temp);
             return;
         }
-        for(int j=0;j<n;j++){
-            if(s.find(nums[j])==s.end()){
-                v.push_back(nums[j]);
-                s.insert(nums[j]);
-                f(0,n,nums,v);
-                s.erase(nums[j]);
-                v.pop_back();
+        
+
+        for(int i=0;i<n;i++){
+            if(s.find(nums[i])==s.end()){
+                temp.push_back(nums[i]);
+                s.insert(nums[i]);
+                f(0,n,nums,temp,s);
+                s.erase(nums[i]);
+                temp.pop_back();
             }
+            
+
         }
+
+
     }
     vector<vector<int>> permute(vector<int>& nums) {
 
         int n=nums.size();
-        vector<int> v;
-        f(0,n,nums,v);
+        set<int> s;
+        vector<int> temp;
+        f(0,n,nums,temp,s);
         return ans;
 
         
