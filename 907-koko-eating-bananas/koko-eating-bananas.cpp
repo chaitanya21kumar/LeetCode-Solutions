@@ -15,7 +15,7 @@ public:
         double ans=-1;
 
         while(l<=r){
-            double mid=ceil(l+(r-l)/2);
+            double mid=floor(l+(r-l)/2);
             if(possible(mid,piles,h)){
                 ans=mid;
                 r=mid-1;
