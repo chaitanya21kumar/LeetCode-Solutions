@@ -10,46 +10,58 @@
  */
 class Solution {
 public:
-    void reorderList(ListNode* head) {
-
-        ListNode* dummyNode=head;
-
-        vector<int> v;
-
+    ListNode* reverseLL(ListNode* head){
+        if(head==NULL || head->next==NULL) return head;
+        ListNode* prev=NULL;
         ListNode* cur=head;
-
         while(cur){
-            v.push_back(cur->val);
-            cur=cur->next;
+            ListNode* nxt=cur->next;
+            cur->next=prev;
+            prev=cur;
+            cur=nxt;
+        }
+        return prev;
+    }
+    void reorderList(ListNode* head) {
+        if(head==NULL || head->next==NULL) return;
+        ListNode* slow=head;
+        ListNode* fast=head->next;
+        while(fast!=NULL && fast->next!=NULL){
+            slow=slow->next;
+            fast=fast->next->next;
         }
 
-        int n=v.size();
-        int x=n;
-        if(x%2==0) x--;
-        if(n==1) return;
+        ListNode* head2=reverseLL(slow->next); // head2 is reversed head
+        slow->next=NULL;
 
-        for(int i=0;i<=x/2;i++){
-            int l=i,r=n-i-1;
-            ListNode* left=new ListNode(v[l]);
-            ListNode* right=new ListNode(v[r]);
-            if(l==r){
-                dummyNode->next=right;
-                right->next=NULL;
-                break;
-            }
-            if(dummyNode==head){
-                dummyNode->next=right;
-                dummyNode=right;
+        ListNode* left=head;
+        ListNode* right=head2;
+        ListNode* dummy=head;
+        
+
+
+        while(left && right){
+            if(dummy==head){
+
             }
             else{
-                dummyNode->next=left;
-                left->next=right;
-                dummyNode=right;
+                dummy->next=left;
             }
-            
+            ListNode* ln=left->next;
+            ListNode* rn=right->next;
+            left->next=right;
+            dummy=right;
+            left=ln;
+            right=rn;
+            // 1 2 3 | 4 5
+            // 1 5| 2 4 | 3 
+
+
         }
 
-
+        if(left!=NULL){
+            dummy->next=left;
+        }
         
     }
 };
