@@ -11,7 +11,6 @@
 class Solution {
 public:
     ListNode* reverseLL(ListNode* head){
-        if(head==NULL || head->next==NULL) return head;
         ListNode* prev=NULL;
         ListNode* cur=head;
         while(cur){
@@ -23,45 +22,33 @@ public:
         return prev;
     }
     void reorderList(ListNode* head) {
-        if(head==NULL || head->next==NULL) return;
+        if(!head || !head->next) return;
         ListNode* slow=head;
         ListNode* fast=head->next;
-        while(fast!=NULL && fast->next!=NULL){
+
+        while(fast && fast->next){
             slow=slow->next;
             fast=fast->next->next;
         }
 
-        ListNode* head2=reverseLL(slow->next); // head2 is reversed head
+        ListNode* head2=reverseLL(slow->next);
         slow->next=NULL;
 
-        ListNode* left=head;
-        ListNode* right=head2;
-        ListNode* dummy=head;
+        ListNode* head1=head;
         
+        while(head2){
+            ListNode* ln=head1->next;
+            ListNode* rn=head2->next;
 
-
-        while(left && right){
-            if(dummy==head){
-
-            }
-            else{
-                dummy->next=left;
-            }
-            ListNode* ln=left->next;
-            ListNode* rn=right->next;
-            left->next=right;
-            dummy=right;
-            left=ln;
-            right=rn;
-            // 1 2 3 | 4 5
-            // 1 5| 2 4 | 3 
-
-
+            head1->next=head2;
+            head2->next=ln;
+            head1=ln;
+            head2=rn;
         }
 
-        if(left!=NULL){
-            dummy->next=left;
-        }
+
+
+
         
     }
 };
