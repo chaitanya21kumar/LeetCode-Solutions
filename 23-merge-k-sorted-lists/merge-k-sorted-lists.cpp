@@ -10,37 +10,32 @@
  */
 class Solution {
 public:
-    ListNode* f(ListNode* head1,ListNode* head2){
-        ListNode* dummy=new ListNode(-1);
-        ListNode* temp=dummy;
-        while(head1 && head2){
-            if(head1->val<=head2->val){
-                temp->next=head1;
-                temp=head1;
-                head1=head1->next;
-            }
-            else{
-                temp->next=head2;
-                temp=head2;
-                head2=head2->next;
-            }
-        }
-        if(head1) temp->next=head1;
-        if(head2) temp->next=head2;
-        return dummy->next;
-    }
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-        if(lists.size()==0) return NULL;
-        while(lists.size()>1){
-            ListNode* head1=lists.back();
-            lists.pop_back();
-            ListNode* head2=lists.back();
-            lists.pop_back();
-            ListNode* head=f(head1,head2);
-            lists.push_back(head);
+
+        typedef pair<int,ListNode*> p;
+        priority_queue<p,vector<p>,greater<p>> pq;
+        int n=lists.size();
+        for(int i=0;i<n;i++){
+            if(lists[i]!=NULL) pq.push({lists[i]->val,lists[i]});
         }
 
-        return lists[0];
+        ListNode* dummy=new ListNode(-1);
+        ListNode* temp=dummy;
+
+        while(!pq.empty()){
+            ListNode* node=pq.top().second;
+            pq.pop();
+            temp->next=node;
+            temp=node;
+            if(node->next) pq.push({node->next->val,node->next});
+        }
+
+        return dummy->next;
+
+        
+
+
+
         
     }
 };
