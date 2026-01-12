@@ -4,30 +4,26 @@ public:
         public:
         int key;
         int val;
-        Node* next;
-        Node* prev;
-
+        Node* next=NULL;
+        Node* prev=NULL;
         Node(int k,int v){
             key=k;
             val=v;
-            next=NULL;
-            prev=NULL;
         }
     };
 
-    unordered_map<int,Node*> m;
     int cap;
+    map<int,Node*> m;
     Node* head;
     Node* tail;
 
     LRUCache(int capacity) {
-        m.clear();
         cap=capacity;
+        m.clear();
         head=new Node(-1,-1);
         tail=new Node(-1,-1);
         head->next=tail;
         tail->prev=head;
-        
     }
 
     void deleteNode(Node* node){
@@ -40,23 +36,20 @@ public:
     void insertAfterHead(Node* node){
         Node* afterhead=head->next;
         head->next=node;
+        afterhead->prev=node;
         node->next=afterhead;
         node->prev=head;
-        afterhead->prev=node;
     }
     
     int get(int key) {
-
         if(m.find(key)==m.end()) return -1;
         Node* node=m[key];
         deleteNode(node);
         insertAfterHead(node);
         return node->val;
-        
     }
     
     void put(int key, int value) {
-
         if(m.find(key)!=m.end()){
             Node* node=m[key];
             node->val=value;
@@ -66,14 +59,16 @@ public:
         else{
             if(m.size()==cap){
                 Node* lru=tail->prev;
-                deleteNode(lru);
                 m.erase(lru->key);
+                deleteNode(lru);
             }
             Node* node=new Node(key,value);
             m[key]=node;
             insertAfterHead(node);
-            
         }
+
+
+
         
     }
 };
