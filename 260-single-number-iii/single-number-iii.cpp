@@ -1,25 +1,22 @@
 class Solution {
 public:
-    typedef long long int ll;
     vector<int> singleNumber(vector<int>& nums) {
-
+        typedef long long int ll;
         ll n=nums.size();
-        ll total_xor=0;
-        for(ll i=0;i<n;i++){
-            total_xor^=nums[i];
-        }
+        ll tc=0; // total xor
+        for(int i=0;i<n;i++) tc^=nums[i];
 
-        ll n1=0,n2=0;
-        ll mask=total_xor & (-total_xor);
+        ll m=1;
+        while((m & tc)==0) m=m<<1;
+
+        int n1=0,n2=0;
 
         for(auto &x:nums){
-            if(mask & x){
-                n1^=x;
-            }
+            if((x & m)) n1^=x;
             else n2^=x;
-        }
+        } 
 
-        return {(int)n1,(int)n2};
+        return {n1,n2};
         
     }
 };
