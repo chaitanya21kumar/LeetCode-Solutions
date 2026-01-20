@@ -1,24 +1,26 @@
 class Solution {
 public:
-    int dp[20][20000];
-    int f(int i,int amt,vector<int>& coins){
+    int dp[20000];
+    int f(vector<int>& coins, int amt){
         if(amt==0) return 0;
-        if(i>=coins.size() && amt!=0) return INT_MAX;
-        if(dp[i][amt]!=-1) return dp[i][amt];
-        int pick=INT_MAX;
-        int notpick=f(i+1,amt,coins);
-        if(amt>=coins[i]){
-            int x=f(i,amt-coins[i],coins);
-            if(x!=INT_MAX) pick=1+x;
+        if(amt<0) return INT_MAX;
+        if(dp[amt]!=-1) return dp[amt];
+        int x=INT_MAX;
+        for(auto &c:coins){
+            if(amt>=c){
+                int y=f(coins,amt-c);
+                if(y!=INT_MAX) x=min(x,1+y);
+            }
         }
-        int ans=min(pick,notpick);
-        return dp[i][amt]=min(pick,notpick);
+        return dp[amt]=x;
     }
     int coinChange(vector<int>& coins, int amount) {
         memset(dp,-1,sizeof(dp));
         int n=coins.size();
-        int x=f(0,amount,coins);
-        if(x==INT_MAX) return -1;
-        return x; 
+        int ans=f(coins,amount);
+        if(ans!=INT_MAX) return ans;
+        return -1;
+
+        
     }
 };
