@@ -1,31 +1,30 @@
 class Solution {
 public:
     unordered_map<int,vector<int>> adj;
-    vector<int> result;
-    vector<int> f(int i,int par,int n,string &labels){
-        vector<int> cur(26,0);
-        int cur_char=labels[i];
-        cur[cur_char-'a']=1;
+    vector<int> ans;
+    vector<int> count;
+    void f(int i,int par,string &labels){
+        char ch=labels[i];
+        int cb=count[ch-'a']; // count before
+        count[ch-'a']+=1;
         for(auto &x:adj[i]){
             if(x==par) continue;
-            vector<int> child(26,0);
-            child=f(x,i,n,labels);
-            for(int i=0;i<26;i++){
-                cur[i]+=child[i];
-            }
+            f(x,i,labels);
         }
-        result[i]=cur[cur_char-'a'];
-        return cur;
+        int ca=count[ch-'a']; // count after
+        ans[i]=ca-cb;
     }
     vector<int> countSubTrees(int n, vector<vector<int>>& edges, string labels) {
-        result.assign(n,0);
+
+        ans.assign(n,0);
+        count.assign(26,0);
         for(auto &x:edges){
             int u=x[0];
             int v=x[1];
             adj[u].push_back(v);
             adj[v].push_back(u);
         }
-        f(0,-1,n,labels);
-        return result;
+        f(0,-1,labels);
+        return ans;
     }
 };
