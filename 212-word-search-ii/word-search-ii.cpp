@@ -1,63 +1,60 @@
 class Solution {
 public:
     vector<string> result;
-    int r,c;
-    vector<pair<int,int>> directions={{1,0},{0,1},{-1,0},{0,-1}};
+    int m,n;
     struct trieNode{
-        bool endWord;
-        trieNode* children[26];
+        bool wordEnd;
         string word;
+        trieNode* children[26];
     };
     trieNode* getNode(){
         trieNode* temp=new trieNode();
-        temp->endWord=false;
+        temp->wordEnd=false;
+        temp->word="";
         for(int i=0;i<26;i++){
             temp->children[i]=NULL;
         }
-        temp->word="";
         return temp;
     }
-    void insert(trieNode* root,string str){
-        trieNode* pCrawl=root;
-        for(char &ch:str){
-            if(pCrawl->children[ch-'a']==NULL) pCrawl->children[ch-'a']=getNode();
-            pCrawl=pCrawl->children[ch-'a'];
+    void insert(trieNode* root,string &str){
+        trieNode* crawler=root;
+        for(auto &ch:str){
+            if(crawler->children[ch-'a']==NULL) crawler->children[ch-'a']=getNode();
+            crawler=crawler->children[ch-'a'];
         }
-        pCrawl->endWord=true;
-        pCrawl->word=str;
+        crawler->word=str;
+        crawler->wordEnd=true;
     }
-    void dfs(vector<vector<char>>& board,int i,int j,trieNode* root){
-        if(i<0 || i>=r || j<0 || j>=c || board[i][j]=='$' || root->children[board[i][j]-'a']==NULL) return;
+    vector<pair<int,int>> dir={{0,1},{1,0},{-1,0},{0,-1}};
+    void dfs(int i,int j,vector<vector<char>>& board,trieNode* root){
+        if(i<0 || i>=m || j<0 || j>=n || board[i][j]=='$' || root->children[board[i][j]-'a']==NULL) return;
         root=root->children[board[i][j]-'a'];
-        if(root->endWord==true){
+        if(root->wordEnd==true){
             result.push_back(root->word);
-            root->endWord=false;
+            root->wordEnd=false;
         }
-        char temp=board[i][j];
+        char ch=board[i][j];
         board[i][j]='$';
-        for(auto &x:directions){
+        for(auto &x:dir){
             int ii=i+x.first;
             int jj=j+x.second;
-            dfs(board,ii,jj,root);
+            dfs(ii,jj,board,root);
         }
-        board[i][j]=temp;
+        board[i][j]=ch;
     }
 
     vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
 
-        r=board.size();
-        c=board[0].size();
-
+        m=board.size();
+        n=board[0].size();
         trieNode* root=getNode();
-        for(string str:words) insert(root,str);
-
-        for(int i=0;i<r;i++){
-            for(int j=0;j<c;j++){
+        for(auto &x:words) insert(root,x);
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
                 char ch=board[i][j];
-                if(root->children[ch-'a']) dfs(board,i,j,root);
+                if(root->children[ch-'a']!=NULL) dfs(i,j,board,root);
             }
         }
-
         return result;
     }
 };
