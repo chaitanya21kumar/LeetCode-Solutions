@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int dp[500][500];
+    int dp[366][400];
     int f(int i,int d,vector<int>& days,vector<int>& costs){
         if(i>=days.size()) return 0;
         if(dp[i][d]!=-1) return dp[i][d];
