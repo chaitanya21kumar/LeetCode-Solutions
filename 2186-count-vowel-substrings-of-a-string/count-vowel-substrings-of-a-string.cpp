@@ -1,30 +1,45 @@
 class Solution {
 public:
+    bool isvowel(char c){
+        if(c=='a' || c=='e' || c=='i' || c=='o' || c=='u') return true;
+        return false;
+    }
+    int f(int start,int end,string &word){
+        map<char,int> m;
+        int cd=0;
+        int k=start;
+        int ans=0;
+        for(int i=start;i<end;i++){
+
+            if(m[word[i]]==0){
+                cd++;
+            }
+            m[word[i]]++;
+
+            while(cd==5){
+                m[word[k]]--;
+                if(m[word[k]]==0) cd--;
+                k++;
+            }
+            ans+=(k-start);
+        }
+        return ans;
+    }
     int countVowelSubstrings(string word) {
 
-        vector<string> v;
         int n=word.size();
+        int ans=0;
         for(int i=0;i<n;i++){
-            string s="";
-            for(int j=i;j<n;j++){
-                s+=word[j];
-                v.push_back(s);
+            if(isvowel(word[i])){
+                int j=i;
+                while(j<n && isvowel(word[j])){
+                    j++;
+                }
+                ans+=f(i,j,word);
+                i=j-1;
             }
         }
-        int c=0;
-        for(auto &x:v){
-            int ca=0,ce=0,ci=0,co=0,cu=0;
-            int cd=0;
-            for(int i=0;i<x.size();i++){
-                if(x[i]=='a') ca++;
-                else if(x[i]=='e') ce++;
-                else if(x[i]=='i') ci++;
-                else if(x[i]=='o') co++;
-                else if(x[i]=='u') cu++;
-                else cd++;
-            }
-            if(ca && ce && ci && co && cu && !cd) c++;
-        }
-        return c;
+        return ans;
+        
     }
 };
