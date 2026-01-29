@@ -13,9 +13,12 @@ public:
             i++;
         }
         int mxs=0;
-        sort(nums.begin(),nums.end());
-        for(int i=0;i<n;i++) mxs+=nums[i];
-        if(k%2!=0) mxs-=2*nums[0];
+        int mn=INT_MAX;
+        for(int i=0;i<n;i++){
+            mxs+=nums[i];
+            mn=min(mn,nums[i]);
+        }
+        if(k%2!=0) mxs-=2*mn;
         return mxs;
 
 
