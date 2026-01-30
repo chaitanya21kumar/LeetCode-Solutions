@@ -1,22 +1,16 @@
 class Solution {
 public:
-    typedef long long int ll;
-    typedef pair<int,int> p;
+    static bool comp(const vector<int> &a,const vector<int> &b){
+        return a[1]>b[1];
+    }
     int maximumUnits(vector<vector<int>>& boxTypes, int truckSize) {
 
         int n=boxTypes.size();
-        priority_queue<p> pq;
+        sort(boxTypes.begin(),boxTypes.end(),comp);
+
+        int ans=0;
         for(int i=0;i<n;i++){
-            int nob=boxTypes[i][0];
-            int nou=boxTypes[i][1];
-            pq.push({nou,nob});
-        }
-        int c=truckSize,ans=0;
-        while(c>0 && !pq.empty()){
-            auto x=pq.top();
-            pq.pop();
-            int nou=x.first;
-            int nob=x.second;
+            int nou=boxTypes[i][1],nob=boxTypes[i][0];
             int mn=min(truckSize,nob);
             ans+=(mn*nou);
             truckSize-=mn;
