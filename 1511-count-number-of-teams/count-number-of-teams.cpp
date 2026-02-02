@@ -1,5 +1,6 @@
 class Solution {
 public:
+
     int n;
     vector<int> bit;
     void update(int id,int val){
@@ -17,31 +18,27 @@ public:
         return ans;
     }
     int numTeams(vector<int>& rating) {
-
         n=rating.size();
-        bit.resize(n+1,0);
-        vector<int> ls(n,0),rs(n,0);
+        bit.assign(n+1,0);
         vector<vector<int>> v(n);
         for(int i=0;i<n;i++){
             v[i]={rating[i],i};
         }
         sort(v.begin(),v.end());
+        vector<int> ls(n),rs(n);
         for(auto &x:v){
             int idx=x[1];
             int id=idx+1;
-            
+            ls[idx]=query(id-1);
             rs[idx]=query(n)-query(id);
-            ls[idx]=query(id);
             update(id,1);
         }
         int ans=0;
         for(int i=0;i<n;i++){
-            int nls=ls[i]; // number of left smaller
-            int nrs=rs[i];
-            int nll=i-nls; // number of left larger
-            int nrl=n-1-i-nrs;
+            int nls=ls[i],nrs=rs[i];
+            int nll=i-nls,nrl=n-1-i-nrs;
             ans+=(nls*nrl)+(nll*nrs);
         }
-        return ans; 
+        return ans;
     }
 };
