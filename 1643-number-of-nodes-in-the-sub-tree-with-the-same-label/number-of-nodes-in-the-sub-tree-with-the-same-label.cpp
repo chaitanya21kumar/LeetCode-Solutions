@@ -3,19 +3,18 @@ public:
     unordered_map<int,vector<int>> adj;
     vector<int> ans;
     vector<int> count;
-    void f(int i,int par,string &labels){
+    void f(int i,int p,string &labels){
         char ch=labels[i];
-        int cb=count[ch-'a']; // count before
-        count[ch-'a']+=1;
+        int cb=count[ch-'a'];
+        count[ch-'a']++;
         for(auto &x:adj[i]){
-            if(x==par) continue;
+            if(x==p) continue;
             f(x,i,labels);
         }
-        int ca=count[ch-'a']; // count after
+        int ca=count[ch-'a'];
         ans[i]=ca-cb;
     }
     vector<int> countSubTrees(int n, vector<vector<int>>& edges, string labels) {
-
         ans.assign(n,0);
         count.assign(26,0);
         for(auto &x:edges){
@@ -26,5 +25,6 @@ public:
         }
         f(0,-1,labels);
         return ans;
+
     }
 };
