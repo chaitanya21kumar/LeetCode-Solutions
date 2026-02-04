@@ -14,11 +14,9 @@ public:
     unordered_map<string,int> m;
     vector<TreeNode*> v;
     string f(TreeNode* root){
-        if(root==NULL) return "N";
+        if(!root) return "N";
         string s=to_string(root->val)+","+f(root->left)+","+f(root->right);
-        if(m[s]==1){
-            v.push_back(root);
-        }
+        if(m[s]==1) v.push_back(root);
         m[s]++;
         return s;
     }
