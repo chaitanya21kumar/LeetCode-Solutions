@@ -1,20 +1,13 @@
 class Solution {
 public:
+    int f(int n,int k){
+        if(n==1) return 0;
+        int idx=(f(n-1,k)+k)%n;
+        return idx;
+    }
     int findTheWinner(int n, int k) {
 
-        queue<int> q;
-        for(int i=1;i<=n;i++) q.push(i);
-        while(q.size()>1){
-            int el=k-1;
-            while(el>0){
-                int x=q.front();
-                q.pop();
-                q.push(x);
-                el--;
-            }
-            q.pop();
-        }
-        return q.front();
+        return f(n,k)+1;
         
     }
 };
