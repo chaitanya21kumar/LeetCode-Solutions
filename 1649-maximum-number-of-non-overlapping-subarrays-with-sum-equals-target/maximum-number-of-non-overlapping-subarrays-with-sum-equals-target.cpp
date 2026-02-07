@@ -11,7 +11,7 @@ public:
             s+=nums[r];
             int need=s-target;
             if(m.count(need)){
-                if(m[need]>=lidx){
+                if(m[need]+1>lidx){
                     ans++;
                     lidx=r;
                 }
