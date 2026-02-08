@@ -4,7 +4,7 @@ public:
         sort(events.begin(),events.end());
         int n=events.size();
         priority_queue<int,vector<int>,greater<int>> pq;
-        int d=0,ans=0;
+        int d=1,ans=0;
         int i=0;
         while(i<n || !pq.empty()){
             if(pq.empty()) d=max(d,events[i][0]);
