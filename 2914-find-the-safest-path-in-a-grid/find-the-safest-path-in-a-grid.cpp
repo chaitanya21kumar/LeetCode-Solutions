@@ -36,19 +36,20 @@ public:
         vector<vector<int>> vis2(n,vector<int> (n,0));
         pq.push({dist[0][0],{0,0}});
         vis2[0][0]=1;
+        int ans=INT_MAX;
         while(!pq.empty()){
             auto x=pq.top();
             pq.pop();
             int d=x.first;
             int rr=x.second.first;
             int cc=x.second.second;
-            if(rr==n-1 && cc==n-1) return d;
+            ans=min(ans,d);
+            if(rr==n-1 && cc==n-1) return ans;
             for(auto &dir:dirs){
                 int r=rr+dir[0],c=cc+dir[1];
                 if(r>=0 && r<n && c>=0 && c<n && vis2[r][c]==0){
                     vis2[r][c]=1;
-                    int x=min(d,dist[r][c]);
-                    pq.push({x,{r,c}});
+                    pq.push({dist[r][c],{r,c}});
                 }
             }
         }
