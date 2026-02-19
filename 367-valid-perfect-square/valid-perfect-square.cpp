@@ -1,10 +1,23 @@
 class Solution {
 public:
     bool isPerfectSquare(int num) {
+        long long  lo=1;
+        long long  hi=num;
+       
+        while(lo<=hi){
+            long long  mid=lo+(hi-lo)/2;
+            if(mid*mid==num){
+                
+                return true;
+            }
+            else if(mid*mid>num){
+                hi=mid-1;
+            }
+            else{
+                lo=mid+1;
+            }
+        }
 
-        int n=num;
-        int x=sqrt(n);
-        return x*x==n;
-        
+        return false;
     }
 };
