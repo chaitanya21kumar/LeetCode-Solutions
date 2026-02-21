@@ -8,15 +8,14 @@ public:
             }
             return ans;
         }
-        if(dp[i][d]!=-1) return dp[i][d];
+        if(dp[i][d]!=-1) return dp[i][d]; 
         int ans=INT_MAX;
-        int cur_ans=jd[i];
+        int cur_ans=INT_MIN;
         for(int j=i;j<=n-d;j++){
             cur_ans=max(cur_ans,jd[j]);
             ans=min(ans,cur_ans+f(j+1,d-1,n,jd,dp));
         }
         return dp[i][d]=ans;
-
     }
     int minDifficulty(vector<int>& jd, int d) {
 
