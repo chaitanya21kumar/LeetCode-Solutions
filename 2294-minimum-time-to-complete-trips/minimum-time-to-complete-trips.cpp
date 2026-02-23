@@ -5,6 +5,7 @@ public:
         ll x=0;
         for(int i=0;i<time.size();i++){
             x+=(mid/time[i]);
+            if(x>=totalTrip) return true;
         }
         if(x>=totalTrip) return true;
         return false;
