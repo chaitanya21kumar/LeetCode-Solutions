@@ -11,30 +11,18 @@
  */
 class Solution {
 public:
-    unordered_map<TreeNode*,int> m;
-    int mxd=0;
-    void f1(TreeNode* root,int d){
-        if(!root) return;
-        m[root]=d;
-        mxd=max(mxd,d);
-        f1(root->left,d+1);
-        f1(root->right,d+1);
-    }
-
-    TreeNode* f2(TreeNode* root){
-        if(!root || m[root]==mxd) return root;
-        TreeNode* left=f2(root->left);
-        TreeNode* right=f2(root->right);
-        if(left==NULL && right==NULL) return NULL;
-        if(left==NULL) return right;
-        if(right==NULL) return left;
-        return root;
-
+    typedef pair<int,TreeNode*> p;
+    p f(TreeNode* root){
+        if(!root) return {0,NULL};
+        auto l=f(root->left);
+        auto r=f(root->right);
+        if(l.first==r.first) return {l.first+1,root};
+        else if(l.first>r.first) return {l.first+1,l.second};
+        else return {r.first+1,r.second};
     }
     TreeNode* lcaDeepestLeaves(TreeNode* root) {
 
-        f1(root,0);
-        return f2(root);
+        return f(root).second;
         
     }
 };
