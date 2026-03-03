@@ -3,25 +3,28 @@ public:
     vector<int> deckRevealedIncreasing(vector<int>& deck) {
 
         int n=deck.size();
-        vector<int> ans(n);
+        vector<int> v(n,-1);
+        int i=1;
+        int j=0;
         sort(deck.begin(),deck.end());
-        queue<int> q;
-        for(int i=0;i<n;i++) q.push(i);
-        int p=1;
-        int i=0;
-        while(!q.empty()){
-            auto idx=q.front();
-            q.pop();
-            if(p==1){
-                ans[idx]=deck[i++];
-                p=0;
+        int gap=0;
+        v[0]=deck[0];
+        while(i<n){
+            while(gap!=1){
+                if(v[j]==-1){
+                    gap++;
+                }
+                j++;
+                j%=n;
             }
-            else{
-                q.push(idx);
-                p=1;
+            while(v[j]!=-1){
+                j++;
+                j%=n;
             }
+            v[j]=deck[i++];
+            gap=0;
         }
-        return ans;
+        return v;
         
     }
 };
