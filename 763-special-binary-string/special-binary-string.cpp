@@ -1,6 +1,6 @@
 class Solution {
 public:
-    string f(string s){
+    string f(const string &s){
         int start=0,sum=0;
         vector<string> v;
         for(int i=0;i<s.size();i++){
