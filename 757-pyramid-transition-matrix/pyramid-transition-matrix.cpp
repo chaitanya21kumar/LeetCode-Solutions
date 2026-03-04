@@ -2,23 +2,21 @@ class Solution {
 public:
     unordered_map<string,vector<char>> m;
     unordered_set<string> fr; // failed rows
-    bool f(string cur,string next,int i){
-        if(cur.length()==1) return true;
-        if(next.length()==cur.length()-1){
+    bool f(string curr,string next,int i){
+        if(curr.size()==1) return true;
+        if(next.size()==curr.size()-1){
             if(fr.count(next)) return false;
-            if(f(next,"",0)) return true;
+            if(f(next,"",0)){
+                return true;
+            }
             else{
                 fr.insert(next);
                 return false;
             }
         }
-
-        string bp="";
-        bp+=cur[i];
-        bp+=cur[i+1];
-        if(m.find(bp)==m.end()) return false;
+        string bp=curr.substr(i,2);
         for(auto &x:m[bp]){
-            if(f(cur,next+x,i+1)) return true;
+            if(f(curr,next+x,i+1)) return true;
         }
         return false;
     }
