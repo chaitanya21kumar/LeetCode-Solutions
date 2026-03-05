@@ -54,7 +54,7 @@ public:
             else{
                 sum=p[r]-p[l-1];
                 len=c[r]-c[l-1];
-                val=( num[r]-(((num[l-1]%M)*(power[len]%M))%M) + M ) % M;
+                val= ( num[r] - (num[l-1]*power[len])%M + M ) %M; 
             }
             ll ansi=(val%M)*(sum%M)%M;
             ans[i]=ansi;
