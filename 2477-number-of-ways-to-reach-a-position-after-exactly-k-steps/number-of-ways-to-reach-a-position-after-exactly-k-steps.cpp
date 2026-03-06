@@ -15,7 +15,7 @@ public:
     }
     int numberOfWays(int sp, int ep, int k) {
 
-        vector<vector<int>> dp(5000,vector<int> (2000,-1));
+        vector<vector<int>> dp(3050,vector<int> (1050,-1));
         return f(sp,ep,k,dp);
         
     }
