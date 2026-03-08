@@ -1,7 +1,9 @@
 class Solution {
 public:
+    unordered_map<string,int> m;
     int f(int i,string &s,int n,vector<string>& arr){
         if(i>=n) return 0;
+        if(m.find(s)!=m.end()) return m[s];
         unordered_set<char> st;
         bool p=1;
         for(int i=0;i<s.size();i++){
@@ -25,7 +27,7 @@ public:
             pick=arr[i].size()+f(i+1,str,n,arr);
         }
         int notpick=f(i+1,s,n,arr);
-        return max(pick,notpick);
+        return m[s]=max(pick,notpick);
 
     }
     int maxLength(vector<string>& arr) {
