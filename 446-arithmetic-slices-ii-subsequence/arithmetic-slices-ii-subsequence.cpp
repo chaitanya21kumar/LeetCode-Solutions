@@ -8,15 +8,14 @@ public:
         unordered_map<ll,ll> arr[n];
         for(int i=0;i<n;i++){
             for(int j=0;j<i;j++){
-                ll diff=(ll)nums[j]-nums[i];
+                auto diff=(ll)nums[j]-(ll)nums[i];
                 auto it=arr[j].find(diff);
                 ll cj=(it==arr[j].end())?0:it->second;
-                arr[i][diff]+=cj+1;
                 ans+=cj;
+                arr[i][diff]+=cj+1;
             }
         }
         return ans;
-
         
     }
 };
