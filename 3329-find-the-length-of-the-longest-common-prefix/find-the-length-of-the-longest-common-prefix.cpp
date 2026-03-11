@@ -1,29 +1,63 @@
+struct trieNode{
+    trieNode* children[10];
+};
+
 class Solution {
 public:
+
+    trieNode* getNode(){
+
+        trieNode* temp=new trieNode();
+        for(int i=0;i<10;i++){
+            temp->children[i]=NULL;
+        }
+        return temp;
+
+    }
+
+    void insert(int num,trieNode* root){
+
+        string s=to_string(num);
+        trieNode* crawler=root;
+        for(int i=0;i<s.size();i++){
+            int idx=s[i]-'0';
+            if(crawler->children[idx]==NULL){
+                crawler->children[idx]=getNode();
+            }
+            crawler=crawler->children[idx];
+        }
+
+    }
+
+    int search(int num,trieNode* root){
+
+        int len=0;
+        string s=to_string(num);
+        trieNode* crawler=root;
+        for(int i=0;i<s.size();i++){
+            int idx=s[i]-'0';
+            if(crawler->children[idx]==NULL) break;
+            else{
+                len++;
+                crawler=crawler->children[idx];
+            }
+        }
+        return len;
+
+    }
     int longestCommonPrefix(vector<int>& arr1, vector<int>& arr2) {
 
-        unordered_set<int> s;
+        trieNode* root=new trieNode();
+
         for(int i=0;i<arr1.size();i++){
-            int num=arr1[i];
-            while(s.find(num)==s.end() && num>0){
-                s.insert(num);
-                num/=10;
-            }
+            insert(arr1[i],root);
         }
 
         int ans=0;
         for(int i=0;i<arr2.size();i++){
-            int n=arr2[i];
-            while(n>0 && s.find(n)==s.end()){
-                n/=10;
-            }
-
-            if(n>0){
-                int x=(int)log10(n)+1;
-                ans=max(ans,x);
-            }
-
+            ans=max(ans,search(arr2[i],root));
         }
+
         return ans;
         
     }
