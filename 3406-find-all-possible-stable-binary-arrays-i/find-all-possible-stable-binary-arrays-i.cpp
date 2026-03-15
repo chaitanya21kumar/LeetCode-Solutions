@@ -1,30 +1,30 @@
 class Solution {
 public:
+    int dp[210][210][3];
     #define M 1000000007
-    int dp[210][210][2];
-    int f(int cz,int co,bool lone,int l){
-        if(cz==0 && co==0) return 1;
-        if(dp[cz][co][lone]!=-1) return dp[cz][co][lone];
+    int f(int z,int o,bool lw1,int l){
+        if(z==0 && o==0) return 1;
+        if(dp[z][o][lw1]!=-1) return dp[z][o][lw1];
         int ans=0;
-        if(lone==true){
-            for(int i=1;i<=min(cz,l);i++){
-                ans=(ans+f(cz-i,co,false,l))%M;
+        if(lw1){
+            for(int i=1;i<=min(z,l);i++){
+                ans=(ans+f(z-i,o,false,l))%M;
             }
         }
         else{
-            for(int i=1;i<=min(l,co);i++){
-                ans=(ans+f(cz,co-i,true,l))%M;
+            for(int i=1;i<=min(o,l);i++){
+                ans=(ans+f(z,o-i,true,l))%M;
             }
         }
-        return dp[cz][co][lone]=ans;
+        return dp[z][o][lw1]=ans;
+
     }
-    int numberOfStableArrays(int zero, int one, int limit) {
+    int numberOfStableArrays(int z, int o, int l) {
 
         memset(dp,-1,sizeof(dp));
-        int swone=f(zero,one,false,limit)%M;
-        int swzero=f(zero,one,true,limit)%M;
-        return (swone+swzero)%M;
-
+        int sw0=f(z,o,true,l)%M;
+        int sw1=f(z,o,false,l)%M;
+        return (sw0+sw1)%M;
         
     }
 };
