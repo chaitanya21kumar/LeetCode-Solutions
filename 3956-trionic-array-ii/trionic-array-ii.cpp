@@ -4,7 +4,6 @@ public:
     ll mn=LLONG_MIN/2;
     ll f(int i,int t,int n,vector<vector<ll>> &dp,vector<int> &nums){
         if(i>=n){
-            if(t==3) return 0;
             return mn;
         }
         if(dp[i][t]!=LLONG_MIN) return dp[i][t];
