@@ -1,5 +1,6 @@
 class Solution {
 public:
+    typedef pair<int,int> p;
     int minCost(int n, vector<vector<int>>& edges) {
 
         vector<vector<pair<int,int>>> adj(n);
@@ -8,27 +9,27 @@ public:
             adj[u].push_back({v,w});
             adj[v].push_back({u,2*w});
         }
+        priority_queue<p,vector<p>,greater<p>> pq;
         vector<int> dist(n,INT_MAX);
         dist[0]=0;
-        queue<int> q;
-        q.push(0);
-        while(!q.empty()){
-            int sz=q.size();
-            for(int i=0;i<sz;i++){
-                auto x=q.front();
-                q.pop();
-                for(auto &y:adj[x]){
-                    int v=y.first,w=y.second;
-                    if(dist[v]>dist[x]+w){
-                        dist[v]=dist[x]+w;
-                        q.push(v);
-                    }
+        pq.push({0,0});
+        while(!pq.empty()){
+            auto x=pq.top();
+            pq.pop();
+            int node=x.second;
+            int d=x.first;
+            if(d>dist[node]) continue;
+            if(node==n-1) return dist[node];
+            for(auto &y:adj[node]){
+                int v=y.first,w=y.second;
+                if(dist[v]>dist[node]+w){
+                    dist[v]=dist[node]+w;
+                    pq.push({dist[v],v});
                 }
             }
         }
-        int ans=dist[n-1];
-        if(ans==INT_MAX) return -1;
-        return ans;
-         
+        return -1;
+        
+        
     }
 };
