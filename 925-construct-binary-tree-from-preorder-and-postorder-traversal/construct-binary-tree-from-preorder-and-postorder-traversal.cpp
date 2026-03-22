@@ -12,14 +12,14 @@
 class Solution {
 public:
     unordered_map<int,int> m;
-    TreeNode* f(vector<int>& prev,int prs,int pre,vector<int>& postv,int ps,int pe){
-        if(ps>pe) return NULL;
-        TreeNode* root=new TreeNode(prev[prs]);
+    TreeNode* f(vector<int>& preorder,int prs,int pre,vector<int>& postorder,int ps,int pe){
+        if(prs>pre) return NULL;
+        TreeNode* root=new TreeNode(preorder[prs]);
         if(prs==pre) return root;
-        int psidx=m[prev[prs+1]];
+        int psidx=m[preorder[prs+1]];
         int len=psidx-ps+1;
-        root->left=f(prev,prs+1,prs+len,postv,ps,psidx);
-        root->right=f(prev,prs+len+1,pre,postv,psidx+1,pe-1);
+        root->left=f(preorder,prs+1,prs+len,postorder,ps,psidx);
+        root->right=f(preorder,prs+len+1,pre,postorder,psidx+1,pe-1);
         return root;
     }
     TreeNode* constructFromPrePost(vector<int>& preorder, vector<int>& postorder) {
