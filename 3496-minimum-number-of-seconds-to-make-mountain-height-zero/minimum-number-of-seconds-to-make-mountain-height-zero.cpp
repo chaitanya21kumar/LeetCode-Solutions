@@ -22,8 +22,8 @@ public:
     long long minNumberOfSeconds(int mountainHeight, vector<int>& workerTimes) {
 
         ll lo=1;
-        ll hi=1e18;
-        ll ans=1e18;
+        ll hi=1e16;
+        ll ans=1e16;
         while(lo<=hi){
             ll mid=(lo+(hi-lo)/2);
             if(possible(mid,mountainHeight,workerTimes)){
