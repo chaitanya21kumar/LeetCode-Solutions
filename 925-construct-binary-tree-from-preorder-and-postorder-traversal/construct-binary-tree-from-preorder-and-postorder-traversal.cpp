@@ -15,7 +15,7 @@ public:
     TreeNode* f(vector<int>& preorder,int prs,int pre,vector<int>& postorder,int ps,int pe){
         if(prs>pre) return NULL;
         TreeNode* root=new TreeNode(preorder[prs]);
-        if(prs==pre) return root;
+        if(ps==pe) return root;
         int psidx=m[preorder[prs+1]];
         int len=psidx-ps+1;
         root->left=f(preorder,prs+1,prs+len,postorder,ps,psidx);
