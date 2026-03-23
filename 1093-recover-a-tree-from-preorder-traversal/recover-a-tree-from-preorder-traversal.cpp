@@ -11,32 +11,28 @@
  */
 class Solution {
 public:
-    int n;
-    TreeNode* f(int &i,int d,string s){
-
+    TreeNode* f(int &i,int d,int n,string s){
         if(i>=n) return NULL;
         int j=i;
         while(j<n && s[j]=='-') j++;
         int dash=j-i;
-        if(d!=dash) return NULL;
         int num=0;
+        if(d!=dash) return NULL;
         i+=dash;
         while(i<n && s[i]!='-'){
-            num*=10;
-            num+=(s[i]-'0');
+            num=(num*10) + (s[i]-'0');
             i++;
         }
         TreeNode* root=new TreeNode(num);
-        root->left=f(i,d+1,s);
-        root->right=f(i,d+1,s);
+        root->left=f(i,d+1,n,s);
+        root->right=f(i,d+1,n,s);
         return root;
- 
     }
     TreeNode* recoverFromPreorder(string traversal) {
-
-        n=traversal.size();
+        
+        int n=traversal.size();
         int i=0;
-        return f(i,0,traversal);
+        return f(i,0,n,traversal);
         
     }
 };
