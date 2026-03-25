@@ -4,33 +4,18 @@ public:
 
         int n=s.length();
         if(n%2!=0) return false;
-
-        stack<int> o,oc;
+        int o=0,c=0;
         for(int i=0;i<n;i++){
-            if(locked[i]=='0') oc.push(i);
-            else if(locked[i]=='1'){
-                if(s[i]=='('){
-                    o.push(i);
-                }
-                else if(s[i]==')'){
-                    if(!o.empty()) o.pop();
-                    else{
-                        if(!oc.empty()){
-                            oc.pop();
-                        }
-                        else return false;
-                    }
-                }
-            }
+            if(s[i]=='(' || locked[i]=='0') o++;
+            else o--;
+            if(o<0) return false;
         }
-
-        while(!o.empty() && !oc.empty() && oc.top()>o.top()){
-            o.pop();
-            oc.pop();
+        for(int i=n-1;i>=0;i--){
+            if(s[i]==')' || locked[i]=='0') c++;
+            else c--;
+            if(c<0) return false;
         }
-
-        if(o.empty()) return true;
-        return false;
-
+        return true;
+        
     }
 };
