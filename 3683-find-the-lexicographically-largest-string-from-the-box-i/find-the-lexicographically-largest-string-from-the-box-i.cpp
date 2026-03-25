@@ -6,14 +6,14 @@ public:
         int n=word.size();
         int i=0,j=i+1,k=0;
         while(j+k<n){
-            if(j+k<n && word[i+k]==word[j+k]){
+            if(word[i+k]==word[j+k]){
                 k++;
             }
-            else if(j+k<n && word[i+k]>word[j+k]){
+            else if(word[i+k]>word[j+k]){
                 j+=k+1;
                 k=0;
             }
-            else if(j+k<n && word[i+k]<word[j+k]){
+            else if(word[i+k]<word[j+k]){
                 i=j;
                 j+=1;
                 k=0;
