@@ -1,7 +1,7 @@
 class Solution {
 public:
-    typedef long long int ll;
     #define M 1000000007
+    typedef long long int ll;
     int maximizeSquareArea(int m, int n, vector<int>& hf, vector<int>& vf) {
 
         hf.push_back(1);
@@ -9,9 +9,9 @@ public:
         vf.push_back(1);
         vf.push_back(n);
 
+        unordered_set<int> hd;
         int ans=-1;
 
-        unordered_set<int> hd;
         for(int i=0;i<hf.size();i++){
             for(int j=i+1;j<hf.size();j++){
                 int x=abs(hf[i]-hf[j]);
@@ -27,10 +27,12 @@ public:
                 }
             }
         }
-        if(ans!=-1){
-            return ((ll(ans))*ans)%M;
-        }
+
+        if(ans!=-1) return ((ll(ans))*ans)%M;
         return ans;
 
+
+
+        
     }
 };
