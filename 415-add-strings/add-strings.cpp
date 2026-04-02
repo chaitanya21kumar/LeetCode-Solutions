@@ -12,10 +12,11 @@ public:
             int n=d1+d2+c;
             int ld=n%10;
             c=n/10;
-            ans=to_string(ld)+ans;
+            ans=ans+to_string(ld);
             i--;
             j--;
         }
+        reverse(ans.begin(),ans.end());
         return ans;
         
     }
