@@ -5,7 +5,7 @@ public:
 
         for(int i=m-1;i>=0;i--){
             auto it=ms.end();
-            --it;
+            it--;
             int val=(*it);
             if(val>=tasks[i]){
                 ms.erase(it);
