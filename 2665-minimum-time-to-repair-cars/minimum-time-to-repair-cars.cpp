@@ -12,11 +12,6 @@ public:
     long long repairCars(vector<int>& ranks, int c) {
 
         ll n=ranks.size();
-        ll mx=INT_MIN;
-        
-        for(int i=0;i<n;i++){
-            mx=max(mx,(ll)ranks[i]);
-        }
 
         ll lo=0;
         ll hi=1e14;
