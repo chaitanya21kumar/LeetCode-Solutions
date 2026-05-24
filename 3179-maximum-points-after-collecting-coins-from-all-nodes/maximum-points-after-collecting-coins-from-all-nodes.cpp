@@ -10,10 +10,6 @@ public:
         for(auto &x:adj[i]){
             if(x!=par){
                 p1+=f(x,i,s,n,k,adj,dp,coins);
-            }
-        }
-        for(auto &x:adj[i]){
-            if(x!=par){
                 p2+=f(x,i,s+1,n,k,adj,dp,coins);
             }
         }
