@@ -20,7 +20,6 @@ public:
         sort(nums.begin(),nums.end());
         int ans=INT_MAX;
         if(p==0) return 0;
-        if(n==1) return nums[0];
         int lo=INT_MAX; // min diff
         int hi=abs(nums[0]-nums[n-1]); // max diff
 
