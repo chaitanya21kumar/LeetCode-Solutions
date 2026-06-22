@@ -1,14 +1,12 @@
 class Solution {
 public:
     int f(vector<int> &v){
-        int n=v.size();
-
         int mx=v[0]+v[1];
-        int pvl1mx=v[0];
-        for(int i=1;i<n;i++){
-            int cmx=v[i]+pvl1mx;
+        int pl1mx=v[0];
+        for(int i=1;i<v.size();i++){
+            int cmx=v[i]+pl1mx;
             mx=max(mx,cmx);
-            pvl1mx=max(v[i],pvl1mx+v[i]);
+            pl1mx=max(v[i],pl1mx+v[i]);
         }
         return mx;
     }
@@ -20,17 +18,15 @@ public:
         int mx=INT_MIN;
 
         for(int i=0;i<m;i++){
-            int x=f(grid[i]);
-            mx=max(mx,x);
+            mx=max(mx,f(grid[i]));
         }
 
         vector<int> col(m);
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                col[j]=grid[j][i];
+        for(int j=0;j<n;j++){
+            for(int i=0;i<m;i++){
+                col[i]=grid[i][j];
             }
-            int x=f(col);
-            mx=max(mx,x);
+            mx=max(mx,f(col));
         }
 
         for(int i=1;i<m-1;i++){
@@ -40,6 +36,6 @@ public:
         }
 
         return mx;
-        
+
     }
 };
