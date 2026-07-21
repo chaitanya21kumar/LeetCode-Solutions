@@ -1,35 +1,26 @@
 class Solution {
 public:
-    
-    bool isSelfDividing(int num) {
-        int temp = num; 
-        
-        while (temp > 0) {
-            int digit = temp % 10; 
-            
-            if (digit == 0) {
-                return false; 
-            }
-            
-            if (num % digit != 0) {
-                return false;
-            }
-            
-            temp = temp / 10;
-        }
-        
-        return true;
-    }
+    vector<int> selfDividingNumbers(int l, int r) {
 
-    vector<int> selfDividingNumbers(int left, int right) {
-        vector<int> result; 
-        
-        for (int i = left; i <= right; i++) {
-            if (isSelfDividing(i)) {
-                result.push_back(i);
+        vector<int> ans;
+        unordered_set<int> s;
+        for(int i=l;i<=r;i++){
+            int num=i;
+            int n=num;
+            bool poss=true;
+            while(n>0){
+                int d=n%10;
+                if(d==0 || num%d!=0){
+                    poss=false;
+                    break;
+                }
+                n/=10;
             }
+            if(poss) s.insert(num);
         }
+        for(auto &x:s) ans.push_back(x);
+        sort(ans.begin(),ans.end());
+        return ans;
         
-        return result;
     }
 };
