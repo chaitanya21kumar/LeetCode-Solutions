@@ -1,82 +1,67 @@
-#include <vector>
-#include <string>
-#include <queue>
-
-using namespace std;
-
-struct State {
-    int row;
-    int col;
-    int mask;
-    int dist;
-};
-
 class Solution {
 public:
+    vector<vector<int>> dirs={{0,1},{1,0},{-1,0},{0,-1}};
     int shortestPathAllKeys(vector<string>& grid) {
-        int m = grid.size();
-        int n = grid[0].size();
-        
-        int startRow = -1, startCol = -1;
-        int totalKeys = 0;
-        
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (grid[i][j] == '@') {
-                    startRow = i;
-                    startCol = j;
-                } else if (grid[i][j] >= 'a' && grid[i][j] <= 'f') {
-                    totalKeys++;
+
+        int m=grid.size();
+        int n=grid[0].size();
+
+        queue<vector<int>> q;
+        int c=0;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j]=='@'){
+                    q.push({i,j,0,0});
+                }
+                else if(grid[i][j]>='a' && grid[i][j]<='f'){
+                    c++;
                 }
             }
         }
-        
-        int targetMask = (1 << totalKeys) - 1;
-        bool visited[31][31][64] = {false};
-        
-        queue<State> q;
-        q.push({startRow, startCol, 0, 0});
-        visited[startRow][startCol][0] = true;
-        
-        int dr[] = {-1, 1, 0, 0};
-        int dc[] = {0, 0, -1, 1};
-        
-        while (!q.empty()) {
-            State curr = q.front();
+
+        int fksd=pow(2,c)-1; // final key status decimal
+        int vis[m][n][fksd+1];
+        memset(vis,0,sizeof(vis));
+
+        while(!q.empty()){
+            auto x=q.front();
             q.pop();
-            
-            if (curr.mask == targetMask) {
-                return curr.dist;
-            }
-            
-            for (int i = 0; i < 4; ++i) {
-                int nextRow = curr.row + dr[i];
-                int nextCol = curr.col + dc[i];
-                int nextMask = curr.mask;
-                
-                if (nextRow >= 0 && nextRow < m && nextCol >= 0 && nextCol < n) {
-                    char cell = grid[nextRow][nextCol];
-                    
-                    if (cell == '#') continue;
-                    
-                    if (cell >= 'A' && cell <= 'F') {
-                        if (!(nextMask & (1 << (cell - 'A')))) {
-                            continue;
+            int i=x[0];
+            int j=x[1];
+            int s=x[2];
+            int cksd=x[3];
+
+            if(cksd==fksd) return s;
+            for(auto &y:dirs){
+                int nr=i+y[0];
+                int nc=j+y[1];
+
+                if(nr>=0 && nr<m && nc>=0 && nc<n && grid[nr][nc]!='#'){
+                    char ch=grid[nr][nc];
+
+                    if(grid[nr][nc]>='A' && grid[nr][nc]<='F'){
+                        if(vis[nr][nc][cksd]==0 && ((cksd>>(ch-'A'))&1)==1){
+                            vis[nr][nc][cksd]=1;
+                            q.push({nr,nc,s+1,cksd});
                         }
                     }
-                    
-                    if (cell >= 'a' && cell <= 'f') {
-                        nextMask |= (1 << (cell - 'a'));
+                    else if(grid[nr][nc]>='a' && grid[nr][nc]<='f'){
+                        int nsd=cksd|(1<<(ch-'a'));
+                        if(vis[nr][nc][nsd]==0){
+                            vis[nr][nc][nsd]=1;
+                            q.push({nr,nc,s+1,nsd});
+                        }
                     }
-                    
-                    if (!visited[nextRow][nextCol][nextMask]) {
-                        visited[nextRow][nextCol][nextMask] = true;
-                        q.push({nextRow, nextCol, nextMask, curr.dist + 1});
+                    else{
+                        if(vis[nr][nc][cksd]==0){
+                            vis[nr][nc][cksd]=1;
+                            q.push({nr,nc,s+1,cksd});
+                        }
                     }
                 }
             }
         }
-        
         return -1;
+
     }
 };
