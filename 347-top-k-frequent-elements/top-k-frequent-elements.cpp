@@ -4,24 +4,22 @@ public:
 
         int n=nums.size();
         unordered_map<int,int> m;
-        for(int i=0;i<n;i++) m[nums[i]]++;
-
-        vector<vector<int>> v(n+1);
-
-        for(auto x:m){
-            int f=x.second,val=x.first;
-            v[f].push_back(val);
+        for(int i=0;i<n;i++){
+            m[nums[i]]++;
         }
-
+        priority_queue<pair<int,int>> pq;
+        for(auto &x:m){
+            int ky=x.first;
+            int f=x.second;
+            pq.push({f,ky});
+        }
         vector<int> ans;
-
-        for(int i=n;i>=0;i--){
-            for(auto x:v[i]){
-                if(ans.size()==k) break;
-                ans.push_back(x);
-            }
+        while(k>0){
+            ans.push_back(pq.top().second);
+            pq.pop();
+            k--;
         }
         return ans;
-        
+
     }
 };
