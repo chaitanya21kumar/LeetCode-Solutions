@@ -4,28 +4,24 @@ public:
 
         int n=s.size();
         stack<char> st;
-        for(auto x:s){
-            char ch='#';
-            if(!st.empty()){
-                ch=st.top();
+        for(int i=0;i<n;i++){
+            char ch=s[i];
+            if(ch=='(' || ch=='[' || ch=='{'){
+                st.push(ch);
             }
-            if(x=='(' || x=='{' || x=='['){
-                st.push(x);
-                continue;
+            else if(ch==')'){
+                if(!st.empty() && st.top()=='(') st.pop();
+                else return false;
             }
-            else if(x==')'){
-                if(ch!='(') return false; 
-                
+            else if(ch==']'){
+                if(!st.empty() && st.top()=='[') st.pop();
+                else return false;
             }
-            else if(x=='}'){
-                if(ch!='{') return false;
+            else if(ch=='}'){
+                if(!st.empty() && st.top()=='{') st.pop();
+                else return false;
             }
-            else if(x==']'){
-                if(ch!='[') return false;
-            }
-            st.pop();
         }
-
         if(st.empty()) return true;
         return false;
         
