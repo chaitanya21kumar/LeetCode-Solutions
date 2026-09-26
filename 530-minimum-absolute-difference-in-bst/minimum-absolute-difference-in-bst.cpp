@@ -11,27 +11,21 @@
  */
 class Solution {
 public:
-    int min_diff = 1e9;
-    int prev_value = -1;
-    
-    void inOrderTraversal(TreeNode* node) {
-        if (node == nullptr) {
-            return;
-        }
-        
-        inOrderTraversal(node->left);
-        
-        if (prev_value != -1) {
-            min_diff = min(min_diff, node->val - prev_value);
-        }
-        
-        prev_value = node->val;
-        
-        inOrderTraversal(node->right);
+    vector<int> v;
+    void f(TreeNode* root){
+        if(root->left) f(root->left);
+        v.push_back(root->val);
+        if(root->right) f(root->right);
     }
-    
     int getMinimumDifference(TreeNode* root) {
-        inOrderTraversal(root);
-        return min_diff;
+
+        f(root);
+        int d=INT_MAX;
+        for(int i=0;i<v.size()-1;i++){
+            int di=abs(v[i]-v[i+1]);
+            d=min(d,di);
+        }
+        return d;
+
     }
 };
