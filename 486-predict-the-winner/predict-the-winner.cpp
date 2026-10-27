@@ -6,7 +6,7 @@ public:
         if(dp[i][j]!=-1) return dp[i][j];
         int ti=nums[i]+min(f(i+2,j,nums,dp),f(i+1,j-1,nums,dp));
         int tj=nums[j]+min(f(i+1,j-1,nums,dp),f(i,j-2,nums,dp));
-        return max(ti,tj);
+        return dp[i][j]=max(ti,tj);
     }
     bool predictTheWinner(vector<int>& nums) {
 
