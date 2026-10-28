@@ -12,26 +12,27 @@ class Solution {
 public:
     ListNode* mergeNodes(ListNode* head) {
 
-        vector<int> v;
-        ListNode* temp=head;
+        ListNode* t1=head;
+        ListNode* t2=head->next;
         int s=0;
-        while(temp!=NULL){
-            if(temp->val==0){
-                if(s!=0){
-                    v.push_back(s);
-                }
-                s=0;
+        while(t2!=NULL){
+            while(t2->val!=0){
+                s+=t2->val;
+                t2=t2->next;
             }
-            else s+=temp->val;
-            temp=temp->next;
+            t1->val=s;
+            s=0;
+            if(t2->next==NULL){
+                t1->next=NULL;
+                break;
+            }
+            else{
+                t1->next=t2;
+                t1=t2;
+            }
+            t2=t2->next;
         }
-        ListNode* h1=new ListNode(0);
-        ListNode* h2=h1;
-        for(int i=0;i<v.size();i++){
-            h2->next=new ListNode(v[i]);
-            h2=h2->next;
-        }
-        return h1->next;
+        return head;
         
     }
 };
